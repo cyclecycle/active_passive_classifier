@@ -10,10 +10,14 @@ TO_BE_FORMS = {
     'are'
 }
 
-PREP_DEP = {
-    'agent',
-    'prep'
+PREP_FORMS = {
+    'by'
 }
+
+# PREP_DEPS = {
+#     'prep',
+#     'agent',
+# }
 
 
 def find_passive_verbs(doc):
@@ -21,15 +25,13 @@ def find_passive_verbs(doc):
         # print(word, word.pos_, word.tag_)
         if not word.pos_ == 'VERB' or word.tag_ == 'VBD':
             continue
-        for pre in doc[word.i-1:word.i]:
-            # print(pre.text)
-            if pre.text in TO_BE_FORMS:
-                yield word
-        # for post in doc[word.i+1:word.i+2]:
-        #     # print(word)
-        #     # print(post.dep_)
-        #     if post.dep_ in PREP_DEP:
-        #         yield word
+        # pre = doc[word.i-1]
+        # if not pre.text in TO_BE_FORMS:
+        #     continue
+        post = doc[word.i+1]
+        if not post.text in PREP_FORMS:
+            continue
+        yield word
 
 
 if __name__ == '__main__':
