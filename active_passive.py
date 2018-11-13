@@ -25,13 +25,14 @@ def find_passive_verbs(doc):
         # print(word, word.pos_, word.tag_)
         if not word.pos_ == 'VERB' or word.tag_ == 'VBD':
             continue
-        # pre = doc[word.i-1]
-        # if not pre.text in TO_BE_FORMS:
-        #     continue
-        post = doc[word.i+1]
-        if not post.text in PREP_FORMS:
+        pre = doc[word.i-1]
+        if pre.text in TO_BE_FORMS:
+            yield word
             continue
-        yield word
+        post = doc[word.i+1]
+        if post.text in PREP_FORMS:
+            yield word
+            continue
 
 
 if __name__ == '__main__':
